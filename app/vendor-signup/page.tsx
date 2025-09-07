@@ -1,0 +1,113 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { useLanguage } from "@/lib/language-context"
+
+export default function VendorSignupPage() {
+  const { t } = useLanguage()
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    businessName: "",
+    businessDescription: "",
+    address: "",
+  })
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle vendor signup logic here
+    alert("Vendor signup submitted successfully!")
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-2xl mx-auto">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl text-center">{t("vendorSignup")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="name">{t("name")}</Label>
+                  <Input id="name" name="name" value={formData.name} onChange={handleInputChange} required />
+                </div>
+                <div>
+                  <Label htmlFor="email">{t("email")}</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="phone">{t("phone")}</Label>
+                <Input id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
+              </div>
+
+              <div>
+                <Label htmlFor="businessName">{t("businessName")}</Label>
+                <Input
+                  id="businessName"
+                  name="businessName"
+                  value={formData.businessName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="businessDescription">{t("businessDescription")}</Label>
+                <Textarea
+                  id="businessDescription"
+                  name="businessDescription"
+                  value={formData.businessDescription}
+                  onChange={handleInputChange}
+                  rows={4}
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="address">{t("address")}</Label>
+                <Textarea
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  rows={3}
+                  required
+                />
+              </div>
+
+              <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                {t("submit")}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
